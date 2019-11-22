@@ -14,25 +14,16 @@ public class AppUDP1 {
             InetAddress destination_address = InetAddress.getLocalHost();
             int destination_port = 20000;
             
-            byte[] buf = new byte[20];
-            
-            byte[] received_data;
-            int origin_port;
-           
-            
-            byte[] msg_buf;
-            int msg_size;
-            
-            
             Scanner sc = new Scanner(System.in);
-            System.out.println("Digite sua mensagem");
+            
             while (true) {
+               
                 //if(){
                     //...........enviar..............//
-                    
+                    System.out.println("Enviado: ");
                     String msg = sc.nextLine();
-                    msg_buf = msg.getBytes();
-                    msg_size = msg_buf.length;
+                    byte[] msg_buf = msg.getBytes();
+                    int msg_size = msg_buf.length;
                     
                     //System.out.print("[ Montando datagrama UDP  ..................  ");
                     DatagramPacket pack = new DatagramPacket(msg_buf, msg_size, destination_address, destination_port);
@@ -42,23 +33,24 @@ public class AppUDP1 {
                     socket.send(pack);
                     //System.out.println("[OK] ]");
                     
-                //}else{
+                //*}else{
                     //...........receber.............//
+                    byte[] buf = new byte[20];
                     DatagramPacket pack1 = new DatagramPacket(buf, buf.length);
                     //System.out.print("[ Aguardando recebimento de mensagem  ..................  ");
                     socket.receive(pack1);
                     //System.out.println("[OK] ]");
                     
-                    received_data = pack1.getData();
+                    byte[] received_data = pack1.getData();
                     String received_msg = new String(received_data); 
                     //InetAddress origin_address = pack1.getAddress();
-                   // origin_port = pack1.getPort();
+                   //int origin_port = pack1.getPort();
                     
-                    System.out.println("  Mensagem:             "+received_msg);
+                    System.out.println("Recebido: "+received_msg);
                    // System.out.println("  Endereço de origem:   "+origin_address.getHostAddress());
                     //System.out.println("  Porta de origem:      "+origin_port);
     
-                //}
+               // }
             }
         } catch (Exception e){
             System.out.println(e.getMessage());
